@@ -1,0 +1,42 @@
+{
+    "name": "KOEL-MUSIC",
+    "version": "1.0.1",
+    "description": "I'm a Learner, Developer, and A Freak here is mine Discord Music Bot",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/BlackBox-cmd/KOEL-MUSIC.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/BlackBox-cmd/KOEL-MUSIC/issues"
+    },
+    "homepage": "https://github.com/BlackBox-cmd/KOEL-MUSIC#readme",
+    "dependencies": {
+
+        "@discordjs/opus": "^0.9.0",
+        "@distube/deezer": "^1.0.0",
+        "@distube/soundcloud": "^1.3.0",
+        "@distube/spotify": "^1.5.1",
+        "@distube/yt-dlp": "^1.1.3",
+        "@joshdb/core": "^1.2.7",
+        "@joshdb/mongo": "^1.1.6",
+        "@joshdb/sqlite": "^1.1.9",
+        "cors": "^2.8.5",
+        "discord.js": "^14.8.0",
+        "distube": "^4.0.4",
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
+        "ffmpeg-static": "^5.1.0",
+        "libsodium-wrappers": "^0.7.11",
+        "opusscript": "^0.0.8",
+        "simple-find-lyrics": "^0.0.1",
+        "systeminformation": "^5.17.12",
+        "tweetnacl": "^1.0.3"
+    }
+}
