@@ -52,8 +52,8 @@ class KOEL extends Client {
     this.temp = new Collection();
     this.config = require("../settings/config");
     this.distube = new Distube(this, {
-      leaveOnEmpty: false,
-      leaveOnFinish: false,
+      leaveOnEmpty: true,
+      leaveOnFinish: true,
       leaveOnStop: true,
       plugins: [
         new SpotifyPlugin({
