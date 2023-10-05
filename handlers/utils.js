@@ -1,12 +1,12 @@
 const KOEL = require("./Client");
 const {
-    EmbedBuilder,
-    ActionRowBuilder,
-    ButtonBuilder,
-    ButtonStyle,
-    PermissionFlagsBits,
-    Message,
-    CommandInteraction,
+  EmbedBuilder,
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  PermissionFlagsBits,
+  Message,
+  CommandInteraction,
 } = require("discord.js");
 const { Queue } = require("distube");
 
@@ -14,92 +14,93 @@ const { Queue } = require("distube");
  *
  * @param {KOEL} client
  */
-module.exports = async(client) => {
-        // code
-        /**
-         *
-         * @param {Queue} queue
-         */
-        client.buttons = (state) => {
-            let raw = new ActionRowBuilder().addComponents([
-                new ButtonBuilder()
-                .setStyle(ButtonStyle.Secondary)
-                .setCustomId("skip")
-                .setLabel("Skip")
-                .setEmoji(client.config.emoji.skip)
-                .setDisabled(state),
-                new ButtonBuilder()
-                .setStyle(ButtonStyle.Secondary)
-                .setCustomId("pauseresume")
-                .setLabel("P/R")
-                .setEmoji(client.config.emoji.pause_resume)
-                .setDisabled(state),
-                new ButtonBuilder()
-                .setStyle(ButtonStyle.Secondary)
-                .setCustomId("loop")
-                .setLabel("Loop")
-                .setEmoji(client.config.emoji.loop)
-                .setDisabled(state),
-                new ButtonBuilder()
-                .setStyle(ButtonStyle.Secondary)
-                .setCustomId("stop")
-                .setLabel("Stop")
-                .setEmoji(client.config.emoji.stop)
-                .setDisabled(state),
-                new ButtonBuilder()
-                .setStyle(ButtonStyle.Secondary)
-                .setCustomId("autoplay")
-                .setLabel("Autoplay")
-                .setEmoji(client.config.emoji.autoplay)
-                .setDisabled(state),
-            ]);
-            return raw;
-        };
+module.exports = async (client) => {
+  // code
+  /**
+   *
+   * @param {Queue} queue
+   */
+  client.buttons = (state) => {
+    let raw = new ActionRowBuilder().addComponents([
+      new ButtonBuilder()
+        .setStyle(ButtonStyle.Secondary)
+        .setCustomId("skip")
+        .setLabel("Skip")
+        .setEmoji(client.config.emoji.skip)
+        .setDisabled(state),
+      new ButtonBuilder()
+        .setStyle(ButtonStyle.Secondary)
+        .setCustomId("pauseresume")
+        .setLabel("P/R")
+        .setEmoji(client.config.emoji.pause_resume)
+        .setDisabled(state),
+      new ButtonBuilder()
+        .setStyle(ButtonStyle.Secondary)
+        .setCustomId("loop")
+        .setLabel("Loop")
+        .setEmoji(client.config.emoji.loop)
+        .setDisabled(state),
+      new ButtonBuilder()
+        .setStyle(ButtonStyle.Secondary)
+        .setCustomId("stop")
+        .setLabel("Stop")
+        .setEmoji(client.config.emoji.stop)
+        .setDisabled(state),
+      new ButtonBuilder()
+        .setStyle(ButtonStyle.Secondary)
+        .setCustomId("autoplay")
+        .setLabel("Autoplay")
+        .setEmoji(client.config.emoji.autoplay)
+        .setDisabled(state),
+    ]);
+    return raw;
+  };
 
-        client.editPlayerMessage = async(channel) => {
-            let ID = client.temp.get(channel.guild.id);
-            if (!ID) return;
-            let playembed = channel.messages.cache.get(ID);
-            if (!playembed) {
-                playembed = await channel.messages.fetch(ID).catch((e) => {});
-            }
-            if (!playembed) return;
-            if (client.config.options.nowplayingMsg == true) {
-                playembed.delete().catch((e) => {});
-            } else {
-                let embeds = playembed ? playembed.embeds[0] : null;
-                if (embeds) {
-                    playembed.edit({
-                            embeds: [
-                                embeds.setFooter({
-                                    text: `⛔️ SONG & QUEUE ENDED!`,
-                                    iconURL: channel.guild.iconURL({ dynamic: true }),
-                                }),
-                            ],
-                            components: [client.buttons(true)],
-                        })
-                        .catch((e) => {});
-                }
-            }
-        };
+  client.editPlayerMessage = async (channel) => {
+    let ID = client.temp.get(channel.guild.id);
+    if (!ID) return;
+    let playembed = channel.messages.cache.get(ID);
+    if (!playembed) {
+      playembed = await channel.messages.fetch(ID).catch((e) => {});
+    }
+    if (!playembed) return;
+    if (client.config.options.nowplayingMsg == true) {
+      playembed.delete().catch((e) => {});
+    } else {
+      let embeds = playembed?.embeds ? playembed?.embeds[0] : null;
+      if (embeds) {
+        playembed
+          ?.edit({
+            embeds: [
+              embeds.setFooter({
+                text: `⛔️ SONG & QUEUE ENDED!`,
+                iconURL: channel.guild.iconURL({ dynamic: true }),
+              }),
+            ],
+            components: [client.buttons(true)],
+          })
+          .catch((e) => {});
+      }
+    }
+  };
 
-        /**
-         *
-         * @param {Queue} queue
-         * @returns
-         */
-        client.getQueueEmbeds = async(queue) => {
-                let guild = client.guilds.cache.get(queue.textChannel.guildId);
-                let quelist = [];
-                var maxTracks = 10; //tracks / Queue Page
-                let tracks = queue.songs;
-                for (let i = 0; i < tracks.length; i += maxTracks) {
-                    let songs = tracks.slice(i, i + maxTracks);
-                    quelist.push(
-                            songs
-                            .map(
-                                (track, index) =>
-                                `\` ${i + ++index}. \` ** ${track.name.substring(0, 35)}** - \`${
+  /**
+   *
+   * @param {Queue} queue
+   * @returns
+   */
+  client.getQueueEmbeds = async (queue) => {
+    let guild = client.guilds.cache.get(queue.textChannel.guildId);
+    let quelist = [];
+    var maxTracks = 10; //tracks / Queue Page
+    let tracks = queue.songs;
+    for (let i = 0; i < tracks.length; i += maxTracks) {
+      let songs = tracks.slice(i, i + maxTracks);
+      quelist.push(
+        songs
+          .map(
+            (track, index) =>
+              `\` ${i + ++index}. \` ** ${track.name.substring(0, 35)}** - \`${
                 track.isLive
                   ? `LIVE STREAM`
                   : track.formattedDuration.split(` | `)[0]
@@ -158,7 +159,7 @@ module.exports = async(client) => {
   client.queueembed = (guild) => {
     let embed = new EmbedBuilder()
       .setColor(client.config.embed.color)
-      .setTitle(`Freak Music | Queue`);
+      .setTitle(`KOEL Music | Queue`);
     // .setDescription(`\n\n ** There are \`0\` Songss in Queue ** \n\n`)
     // .setThumbnail(guild.iconURL({ dynamic: true }))
     // .setFooter({
@@ -403,7 +404,7 @@ module.exports = async(client) => {
       .addFields([
         {
           name: `Stats`,
-          value: `>>> ** :gear: \`${allcommands}\` Commands \n :file_folder: \`${allguilds}\` Guilds \n ⌚️ ${botuptime} Uptime \n 🏓 \`${client.ws.ping}\` Ping \n  Made by [\` BlackBox-cmd \`](https://discord.gg/et6cndu8zx) **`,
+          value: `>>> ** :gear: \`${allcommands}\` Commands \n :file_folder: \`${allguilds}\` Guilds \n ⌚️ ${botuptime} Uptime \n 🏓 \`${client.ws.ping}\` Ping \n  Made by [\` Fire Bird \`](https://discord.gg/PcUVWApWN3) **`,
         },
       ])
       .setFooter(client.getFooter(user));

@@ -1,6 +1,6 @@
 # Hi, This BlackBox! 👋
 
-I'm a Learner, Developer, and A Freak and here is mine Discord Music Bot Based on [JUGNU] (https://github.com/kabirsingh2004/JUGNU-MUSIC)
+I'm a Learner, Developer, and A Freak and here is mine Discord Music Bot Based on [KOEL] (https://github.com/kabirsingh2004/KOEL-MUSIC)
 
 # Advance Discord Music Bot
 
